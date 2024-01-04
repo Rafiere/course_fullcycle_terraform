@@ -1,0 +1,1 @@
+Esse é o repositório para o curso de Terraform da FullCycle.
