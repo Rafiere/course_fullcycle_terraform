@@ -1,1 +1,1 @@
-Este é um exemplo de arquivo 2
+Isso veio de uma variável

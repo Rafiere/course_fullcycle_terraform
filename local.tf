@@ -6,5 +6,9 @@
 */
 resource "local_file" "exemplo" {
   filename = "exemplo2.txt"
-  content = "Este é um exemplo de arquivo 2"
+  content = var.conteudo
+}
+
+variable "conteudo" {
+
 }
