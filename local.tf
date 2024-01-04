@@ -5,6 +5,6 @@
    O "exemplo" é o nome que estamos dando.
 */
 resource "local_file" "exemplo" {
-  filename = "exemplo.txt"
+  filename = "exemplo2.txt"
   content = "Este é um exemplo de arquivo 2"
 }
