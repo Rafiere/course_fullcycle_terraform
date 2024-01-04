@@ -9,6 +9,14 @@ resource "local_file" "exemplo" {
   content = var.conteudo
 }
 
+data "local_file" "conteudo-exemplo" {
+  filename= "exemplo2.txt"
+}
+
+output "data-source-result" {
+  value = data.local_file.conteudo-exemplo.content
+}
+
 variable "conteudo" {
   type = string
   default = "Hello World!"
