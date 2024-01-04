@@ -1,1 +1,1 @@
-Isso veio de uma variável
+Isso é um teste!
