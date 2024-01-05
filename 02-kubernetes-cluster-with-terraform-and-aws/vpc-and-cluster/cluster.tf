@@ -45,3 +45,28 @@ resource "aws_iam_role_policy_attachment" "cluster-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy" /* Essa policy é necessária para o EKS e é a que será atachada a role. */
   role       = aws_iam_role.cluster.name
 }
+
+/* Estamos configurando o Cloud Watch para o Cluster. */
+resource "aws_cloudwatch_log_group" "log" {
+  name = "/aws/eks/${var.prefix}-${var.cluster_name}/cluster"
+  retention_in_days = var.retention_days //Essa é a quantidade de dias que o CloudWatch vai armazenar os logs.
+}
+
+/* Abaixo, estamos criando um cluster no EKS. */
+
+resource "aws_eks_cluster" "cluster" {
+  name     = "${var.prefix}-${var.cluster_name}"
+  role_arn = aws_iam_role.cluster.arn //O cluster poderá executar todas as policies que a role permite.
+  enabled_cluster_log_types = ["api", "audit"] //Sâo os tipos de logs que o cluster vai gerar.
+
+  vpc_config {
+    subnet_ids = aws_subnet.subnets[*].id //Estamos pegando todos os subnets que foram criados e colocando dentro do cluster.
+    security_group_ids = [aws_security_group.sg.id] //Estamos pegando o security group que foi criado e colocando dentro do cluster.
+  }
+
+  depends_on = [
+    aws_cloudwatch_log_group.log,
+    aws_iam_role_policy_attachment.cluster-AmazonEKSVPCResourceController,
+    aws_iam_role_policy_attachment.cluster-AmazonEKSClusterPolicy
+  ]
+}
