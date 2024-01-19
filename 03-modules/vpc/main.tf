@@ -1,5 +1,5 @@
 resource "aws_vpc" "new-vpc" {
-  cidr_block = "10.0.0.0/16" //Aqui, teremos o CIDR block para termos os 65536 ips disponíveis para a nossa VPC
+  cidr_block = var.vpc_cidr_block //Aqui, teremos o CIDR block para termos os 65536 ips disponíveis para a nossa VPC
   tags = {
     Name = "${var.prefix}-vpc"
   }
